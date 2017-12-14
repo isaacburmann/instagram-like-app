@@ -1,12 +1,39 @@
 import {EventEmitter} from "@angular/core";
+import * as firebase from "firebase";
 
 export class UserService {
   statusChange: any = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {
+  }
 
   set(userDB) {
     localStorage.setItem('user', JSON.stringify(userDB));
+    const messaging = firebase.messaging();
+    messaging.requestPermission()
+      .then(() => {
+        firebase.messaging().getToken()
+          .then(token => {
+            console.log('token:', token);
+
+            // Recebendo Mensagens
+            messaging.onMessage(payload => {
+              console.log(payload);
+            });
+
+            // Gravando token no banco
+            const updates = {};
+            updates['/users/' + userDB.uid + "/messageToken"] = token;
+            return firebase.database().ref().update(updates);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     this.statusChange.emit(userDB);
   }
 
