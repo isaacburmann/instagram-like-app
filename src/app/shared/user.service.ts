@@ -9,16 +9,19 @@ export class UserService {
 
   set(userDB) {
     localStorage.setItem('user', JSON.stringify(userDB));
+
     const messaging = firebase.messaging();
+
     messaging.requestPermission()
       .then(() => {
         firebase.messaging().getToken()
           .then(token => {
-            console.log('token:', token);
+            console.log('token received:', token);
 
             // Recebendo Mensagens
             messaging.onMessage(payload => {
               console.log(payload);
+              // TODO: Display message
             });
 
             // Gravando token no banco

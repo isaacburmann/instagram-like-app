@@ -13,15 +13,16 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {
   }
 
+  // Coloque suas credenciais do firebase aqui
   ngOnInit() {
     // Initialize Firebase
     const config = {
-      apiKey: "AIzaSyCVVjV4GTqjSBWE5qRXznq9h8_hoNRv6Z8",
-      authDomain: "instagram-d24a5.firebaseapp.com",
-      databaseURL: "https://instagram-d24a5.firebaseio.com",
-      projectId: "instagram-d24a5",
-      storageBucket: "instagram-d24a5.appspot.com",
-      messagingSenderId: "928849873423"
+      apiKey: "",
+      authDomain: "",
+      databaseURL: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: ""
     };
     firebase.initializeApp(config);
     this.router.navigate(['login']);
